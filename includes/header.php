@@ -54,41 +54,62 @@ $titulo_pagina = $titulo_pagina ?? 'EcoTrack Analytics';
                 </div>
             </a>
 
+            <!-- Botão de Ação Primária em Destaque no Topo da Barra Lateral (Desktop) -->
+            <div class="et-sidebar__cta mb-3">
+                <a href="/eco-track-analytics-php/modules/coletas/form.php"
+                   class="et-btn-acao-primaria <?= str_contains($pagina_atual, '/coletas/form.php') ? 'active' : '' ?>"
+                   <?= str_contains($pagina_atual, '/coletas/form.php') ? 'aria-current="page"' : '' ?>
+                   aria-label="Registrar nova pesagem de coleta">
+                    <span class="et-btn-acao-primaria__icone">⚖️</span>
+                    <span class="et-btn-acao-primaria__texto">Registrar Coleta</span>
+                </a>
+            </div>
+
             <nav class="et-nav-list">
-                <a href="/eco-track-analytics-php/dashboard/index.php" class="et-nav-item__link <?= str_contains($pagina_atual, '/dashboard/') ? 'active' : '' ?>">
+                <a href="/eco-track-analytics-php/dashboard/index.php"
+                   class="et-nav-item__link <?= str_contains($pagina_atual, '/dashboard/') ? 'active' : '' ?>"
+                   <?= str_contains($pagina_atual, '/dashboard/') ? 'aria-current="page"' : '' ?>>
                     <span>📊</span> Painel <?= $usuario_logado['perfil'] === 'admin' ? 'Geral' : 'Operacional' ?>
                 </a>
 
-                <a href="/eco-track-analytics-php/modules/coletas/form.php" class="et-nav-item__link <?= str_contains($pagina_atual, '/coletas/form.php') ? 'active' : '' ?>">
-                    <span>⚖️</span> Registrar Coleta
-                </a>
-
-                <a href="/eco-track-analytics-php/modules/coletas/index.php" class="et-nav-item__link <?= (str_contains($pagina_atual, '/coletas/index.php') || (str_contains($pagina_atual, '/coletas/') && !str_contains($pagina_atual, 'form.php'))) ? 'active' : '' ?>">
+                <a href="/eco-track-analytics-php/modules/coletas/index.php"
+                   class="et-nav-item__link <?= (str_contains($pagina_atual, '/coletas/index.php') || (str_contains($pagina_atual, '/coletas/') && !str_contains($pagina_atual, 'form.php'))) ? 'active' : '' ?>"
+                   <?= (str_contains($pagina_atual, '/coletas/index.php') || (str_contains($pagina_atual, '/coletas/') && !str_contains($pagina_atual, 'form.php'))) ? 'aria-current="page"' : '' ?>>
                     <span>📋</span> <?= $usuario_logado['perfil'] === 'admin' ? 'Todas as Coletas' : 'Minhas Coletas' ?>
                 </a>
 
                 <?php if ($usuario_logado['perfil'] === 'admin'): ?>
                     <div style="font-size:0.75rem; text-transform:uppercase; color:var(--et-linha); padding:0.75rem 0.85rem 0.25rem; font-weight:700; letter-spacing:0.05em;">Cadastros Auxiliares</div>
                     
-                    <a href="/eco-track-analytics-php/modules/ecopontos/index.php" class="et-nav-item__link <?= str_contains($pagina_atual, '/ecopontos/') ? 'active' : '' ?>">
+                    <a href="/eco-track-analytics-php/modules/ecopontos/index.php"
+                       class="et-nav-item__link <?= str_contains($pagina_atual, '/ecopontos/') ? 'active' : '' ?>"
+                       <?= str_contains($pagina_atual, '/ecopontos/') ? 'aria-current="page"' : '' ?>>
                         <span>📍</span> Ecopontos
                     </a>
 
-                    <a href="/eco-track-analytics-php/modules/categorias/index.php" class="et-nav-item__link <?= str_contains($pagina_atual, '/categorias/') ? 'active' : '' ?>">
+                    <a href="/eco-track-analytics-php/modules/categorias/index.php"
+                       class="et-nav-item__link <?= str_contains($pagina_atual, '/categorias/') ? 'active' : '' ?>"
+                       <?= str_contains($pagina_atual, '/categorias/') ? 'aria-current="page"' : '' ?>>
                         <span>🏷️</span> Categorias
                     </a>
 
-                    <a href="/eco-track-analytics-php/modules/materiais/index.php" class="et-nav-item__link <?= str_contains($pagina_atual, '/materiais/') ? 'active' : '' ?>">
+                    <a href="/eco-track-analytics-php/modules/materiais/index.php"
+                       class="et-nav-item__link <?= str_contains($pagina_atual, '/materiais/') ? 'active' : '' ?>"
+                       <?= str_contains($pagina_atual, '/materiais/') ? 'aria-current="page"' : '' ?>>
                         <span>♻️</span> Materiais & Fatores
                     </a>
 
-                    <a href="/eco-track-analytics-php/modules/usuarios/index.php" class="et-nav-item__link <?= str_contains($pagina_atual, '/usuarios/') ? 'active' : '' ?>">
+                    <a href="/eco-track-analytics-php/modules/usuarios/index.php"
+                       class="et-nav-item__link <?= str_contains($pagina_atual, '/usuarios/') ? 'active' : '' ?>"
+                       <?= str_contains($pagina_atual, '/usuarios/') ? 'aria-current="page"' : '' ?>>
                         <span>👥</span> Usuários
                     </a>
 
                     <div style="font-size:0.75rem; text-transform:uppercase; color:var(--et-linha); padding:0.75rem 0.85rem 0.25rem; font-weight:700; letter-spacing:0.05em;">Auditoria e Emissão</div>
 
-                    <a href="/eco-track-analytics-php/reports/index.php" class="et-nav-item__link <?= str_contains($pagina_atual, '/reports/') ? 'active' : '' ?>">
+                    <a href="/eco-track-analytics-php/reports/index.php"
+                       class="et-nav-item__link <?= str_contains($pagina_atual, '/reports/') ? 'active' : '' ?>"
+                       <?= str_contains($pagina_atual, '/reports/') ? 'aria-current="page"' : '' ?>>
                         <span>📄</span> Relatórios em PDF
                     </a>
                 <?php endif; ?>
@@ -107,9 +128,16 @@ $titulo_pagina = $titulo_pagina ?? 'EcoTrack Analytics';
 
         <!-- Barra Superior (Mobile) -->
         <header class="et-mobile-header">
-            <span class="et-sidebar__logo-text" style="font-size:1.25rem;">EcoTrack</span>
-            <div style="font-size:0.85rem; color:var(--et-linha);">
-                <?= e($usuario_logado['nome']) ?> (<?= $usuario_logado['perfil'] === 'admin' ? 'Admin' : 'Coletor' ?>)
+            <a href="/eco-track-analytics-php/dashboard/index.php" style="text-decoration:none; color:inherit;">
+                <span class="et-sidebar__logo-text" style="font-size:1.25rem;">EcoTrack</span>
+            </a>
+            <div class="d-flex align-items-center gap-2">
+                <span style="font-size:0.8rem; color:var(--et-linha);">
+                    <?= e($usuario_logado['nome']) ?> (<?= $usuario_logado['perfil'] === 'admin' ? 'Admin' : 'Coletor' ?>)
+                </span>
+                <a href="/eco-track-analytics-php/auth/logout.php" class="btn btn-sm btn-outline-secondary py-1 px-2" title="Encerrar Sessão" style="color:#FFF; border-color:var(--et-cinza); min-height:32px; font-size:0.78rem;">
+                    Sair
+                </a>
             </div>
         </header>
     <?php endif; ?>

@@ -189,7 +189,7 @@ require_once __DIR__ . '/../../includes/header.php';
 
                 <div class="d-flex gap-2 justify-content-end pt-3" style="border-top:1px dashed var(--et-linha);">
                     <a href="/eco-track-analytics-php/modules/coletas/index.php" class="btn btn-outline-secondary">Cancelar</a>
-                    <button type="submit" class="btn btn-primary px-4 py-2" style="font-size:1.05rem; letter-spacing:0.04em;">
+                    <button type="submit" class="btn btn-confirmar-coleta px-4 py-2" style="font-size:1.05rem; letter-spacing:0.04em;">
                         <?= $id ? 'Salvar Alterações' : 'Emitir e Registrar Coleta' ?>
                     </button>
                 </div>

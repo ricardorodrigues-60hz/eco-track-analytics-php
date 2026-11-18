@@ -12,35 +12,39 @@ $pagina_atual = $_SERVER['SCRIPT_NAME'] ?? '';
 </div><!-- /.et-app-layout -->
 
 <?php if ($usuario_logado): ?>
-    <!-- Barra de Navegação Inferior Fixa (Mobile) -->
-    <nav class="et-bottom-nav" aria-label="Navegação Rápida Mobile">
-        <a href="/eco-track-analytics-php/dashboard/index.php" class="et-bottom-nav__item <?= str_contains($pagina_atual, '/dashboard/') ? 'active' : '' ?>">
-            <span style="font-size:1.2rem;">📊</span>
+    <!-- Barra de Navegação Inferior Fixa (Mobile — Máximo 4 destinos) -->
+    <nav class="et-bottom-nav" aria-label="Navegação Principal Mobile">
+        <a href="/eco-track-analytics-php/dashboard/index.php"
+           class="et-bottom-nav__item <?= str_contains($pagina_atual, '/dashboard/') ? 'active' : '' ?>"
+           <?= str_contains($pagina_atual, '/dashboard/') ? 'aria-current="page"' : '' ?>>
+            <span class="et-bottom-nav__icon">📊</span>
             <span>Painel</span>
         </a>
 
-        <!-- Botão Central em Destaque: Registrar Coleta -->
-        <a href="/eco-track-analytics-php/modules/coletas/form.php" class="et-bottom-nav__item et-bottom-nav__item--destaque">
-            <span style="font-size:1.35rem; line-height:1;">⚖️</span>
+        <!-- Botão Central em Destaque: Registrar Coleta (Formato Próprio) -->
+        <a href="/eco-track-analytics-php/modules/coletas/form.php"
+           class="et-bottom-nav__item et-bottom-nav__item--destaque <?= str_contains($pagina_atual, '/coletas/form.php') ? 'active' : '' ?>"
+           <?= str_contains($pagina_atual, '/coletas/form.php') ? 'aria-current="page"' : '' ?>
+           aria-label="Registrar nova pesagem de coleta">
+            <span class="et-bottom-nav__icon" style="font-size:1.35rem; line-height:1;">⚖️</span>
             <span>Coletar</span>
         </a>
 
-        <a href="/eco-track-analytics-php/modules/coletas/index.php" class="et-bottom-nav__item <?= str_contains($pagina_atual, '/coletas/index.php') ? 'active' : '' ?>">
-            <span style="font-size:1.2rem;">📋</span>
-            <span>Histórico</span>
+        <a href="/eco-track-analytics-php/modules/coletas/index.php"
+           class="et-bottom-nav__item <?= (str_contains($pagina_atual, '/coletas/index.php') || (str_contains($pagina_atual, '/coletas/') && !str_contains($pagina_atual, 'form.php'))) ? 'active' : '' ?>"
+           <?= (str_contains($pagina_atual, '/coletas/index.php') || (str_contains($pagina_atual, '/coletas/') && !str_contains($pagina_atual, 'form.php'))) ? 'aria-current="page"' : '' ?>>
+            <span class="et-bottom-nav__icon">📋</span>
+            <span><?= $usuario_logado['perfil'] === 'admin' ? 'Coletas' : 'Histórico' ?></span>
         </a>
 
         <?php if ($usuario_logado['perfil'] === 'admin'): ?>
-            <a href="/eco-track-analytics-php/reports/index.php" class="et-bottom-nav__item <?= str_contains($pagina_atual, '/reports/') ? 'active' : '' ?>">
-                <span style="font-size:1.2rem;">📄</span>
+            <a href="/eco-track-analytics-php/reports/index.php"
+               class="et-bottom-nav__item <?= str_contains($pagina_atual, '/reports/') ? 'active' : '' ?>"
+               <?= str_contains($pagina_atual, '/reports/') ? 'aria-current="page"' : '' ?>>
+                <span class="et-bottom-nav__icon">📄</span>
                 <span>Relatórios</span>
             </a>
         <?php endif; ?>
-
-        <a href="/eco-track-analytics-php/auth/logout.php" class="et-bottom-nav__item" title="Sair da Conta">
-            <span style="font-size:1.2rem;">🚪</span>
-            <span>Sair</span>
-        </a>
     </nav>
 <?php endif; ?>
 

@@ -20,9 +20,34 @@
             return;
         }
 
+        // Aplica a cor da categoria do material ao ticket e ao botão de confirmação
+        function aplicarCorMaterial() {
+            var opt = selectMaterial.options[selectMaterial.selectedIndex];
+            var cor = (opt && opt.value) ? (opt.getAttribute('data-cor') || '') : '';
+            var raiz = document.documentElement;
+            var btnConfirmar = document.querySelector('.btn-confirmar-coleta');
+            var btnDestaque = document.querySelector('.et-bottom-nav__item--destaque');
+
+            if (cor) {
+                raiz.style.setProperty('--cor-material', cor);
+                if (ticketBox) ticketBox.style.setProperty('--cor-material', cor);
+                if (btnConfirmar) btnConfirmar.style.setProperty('--cor-material', cor);
+                if (btnDestaque) btnDestaque.style.setProperty('--cor-material', cor);
+            } else {
+                // Sem material selecionado: volta à tinta neutra
+                raiz.style.removeProperty('--cor-material');
+                if (ticketBox) ticketBox.style.removeProperty('--cor-material');
+                if (btnConfirmar) btnConfirmar.style.removeProperty('--cor-material');
+                if (btnDestaque) btnDestaque.style.removeProperty('--cor-material');
+            }
+        }
+
         function atualizarCalculoImpacto() {
             var opt = selectMaterial.options[selectMaterial.selectedIndex];
             var peso = parseFloat(inputPeso.value) || 0;
+
+            // Atualiza cor do ticket e botão ao trocar material
+            aplicarCorMaterial();
 
             if (opt && opt.value && peso > 0) {
                 var fatorCo2 = parseFloat(opt.getAttribute('data-co2')) || 0;

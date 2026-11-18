@@ -153,10 +153,64 @@ h1, h2, h3, h4, .et-display, .et-titulo {
 }
 
 .et-nav-item__link.active {
-  background-color: rgba(255, 255, 255, 0.14);
+  background-color: var(--et-ticket);
+  color: var(--et-tinta);
+  font-weight: 700;
+  border-left: 4px solid var(--et-tinta);
+}
+
+/* Botão de Ação Primária em Destaque no Topo da Lateral (Desktop) */
+.et-sidebar__cta {
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid rgba(201, 206, 203, 0.2);
+}
+
+.et-btn-acao-primaria {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  width: 100%;
+  min-height: 56px;
+  padding: 0.75rem 1rem;
+  background-color: var(--cor-material, var(--et-tinta));
   color: #FFFFFF;
-  font-weight: 600;
-  border-left-color: var(--et-metal);
+  text-decoration: none;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  border: 2px solid var(--et-linha);
+  box-shadow: 0 3px 0 rgba(0, 0, 0, 0.35);
+  transition: transform 0.1s ease, box-shadow 0.1s ease, background-color 0.15s ease, color 0.15s ease;
+  position: relative;
+}
+
+.et-btn-acao-primaria:hover {
+  background-color: #273b43;
+  color: #FFFFFF;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.45);
+  transform: translateY(-1px);
+}
+
+.et-btn-acao-primaria:focus-visible {
+  outline: 3px solid #FFFFFF;
+  outline-offset: 2px;
+}
+
+.et-btn-acao-primaria:active {
+  transform: translateY(2px);
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.35);
+}
+
+/* Estado Página Atual do Botão Primário (Invertido) */
+.et-btn-acao-primaria.active,
+.et-btn-acao-primaria[aria-current="page"] {
+  background-color: var(--et-ticket);
+  color: var(--et-tinta);
+  border-color: var(--et-ticket);
+  box-shadow: 0 3px 0 rgba(0, 0, 0, 0.2);
 }
 
 .et-sidebar__user {
@@ -187,13 +241,13 @@ h1, h2, h3, h4, .et-display, .et-titulo {
 .et-main-content {
   flex-grow: 1;
   margin-left: 260px;
-  padding: 2rem 2.5rem 5rem 2.5rem;
+  padding: 2rem 2.5rem;
   min-width: 0;
 }
 
-/* Barra Superior Mobile */
+/* Barra Superior Mobile (Oculta por padrão no desktop) */
 .et-mobile-header {
-  display: none;
+  display: none !important;
   background-color: var(--et-tinta);
   color: #FFFFFF;
   padding: 0.85rem 1.25rem;
@@ -204,9 +258,9 @@ h1, h2, h3, h4, .et-display, .et-titulo {
   z-index: 1010;
 }
 
-/* Barra Inferior Mobile (Bottom Navigation Bar) */
+/* Barra Inferior Mobile (Oculta estritamente no desktop) */
 .et-bottom-nav {
-  display: none;
+  display: none !important;
   position: fixed;
   bottom: 0;
   left: 0;
@@ -215,9 +269,6 @@ h1, h2, h3, h4, .et-display, .et-titulo {
   background-color: var(--et-tinta);
   border-top: 2px solid var(--et-linha);
   z-index: 1030;
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
   padding: 0 0.5rem;
 }
 
@@ -229,40 +280,89 @@ h1, h2, h3, h4, .et-display, .et-titulo {
   justify-content: center;
   text-decoration: none;
   color: #D1D6D4;
-  font-size: 0.72rem;
+  font-size: 0.75rem;
   font-weight: 600;
   min-height: 48px;
   gap: 0.2rem;
+  transition: color 0.15s ease;
+}
+
+.et-bottom-nav__item:hover,
+.et-bottom-nav__item:focus-visible {
+  color: #FFFFFF;
+}
+
+.et-bottom-nav__item:focus-visible {
+  outline: 2px solid #FFFFFF;
+  outline-offset: -2px;
 }
 
 .et-bottom-nav__item.active {
-  color: var(--et-metal);
+  color: var(--et-ticket);
+  font-weight: 700;
 }
 
+/* Botão Central Elevado no Mobile (Sem Amarelo, Cor Tinta de Piso/Concreto) */
 .et-bottom-nav__item--destaque {
-  background-color: var(--et-metal);
-  color: var(--et-tinta) !important;
+  flex: 0 0 68px;
+  height: 56px;
+  min-height: 56px;
+  background-color: var(--cor-material, var(--et-tinta));
+  color: #FFFFFF !important;
   font-weight: 700;
+  border: 2px solid var(--et-linha);
   border-radius: 4px;
   padding: 0.35rem 0.5rem;
-  transform: translateY(-8px);
-  box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+  transform: translateY(-10px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.35);
+  transition: transform 0.1s ease, box-shadow 0.1s ease, background-color 0.15s ease;
+}
+
+.et-bottom-nav__item--destaque:hover {
+  transform: translateY(-12px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.45);
+}
+
+.et-bottom-nav__item--destaque:active {
+  transform: translateY(-8px) scale(0.96);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.et-bottom-nav__item--destaque.active {
+  background-color: var(--et-ticket);
+  color: var(--et-tinta) !important;
+  border-color: var(--et-ticket);
 }
 
 /* Responsividade Mobile (< 992px) */
 @media (max-width: 991.98px) {
   .et-sidebar {
-    display: none;
+    display: none !important;
   }
   .et-mobile-header {
-    display: flex;
+    display: flex !important;
   }
   .et-bottom-nav {
-    display: flex;
+    display: flex !important;
+    align-items: center;
+    justify-content: space-around;
   }
   .et-main-content {
     margin-left: 0;
-    padding: 1.25rem 1rem 5rem 1rem;
+    padding: 1.25rem 1rem calc(64px + env(safe-area-inset-bottom, 0px) + 2rem) 1rem;
+  }
+}
+
+/* Desktop (>= 992px): Garante lateral visível e barras mobile ocultas */
+@media (min-width: 992px) {
+  .et-sidebar {
+    display: flex !important;
+  }
+  .et-mobile-header {
+    display: none !important;
+  }
+  .et-bottom-nav {
+    display: none !important;
   }
 }
 
@@ -272,10 +372,35 @@ h1, h2, h3, h4, .et-display, .et-titulo {
 .et-ticket {
   background: var(--et-ticket);
   border: 2px solid var(--et-linha);
+  border-top: 5px solid var(--cor-material, var(--et-tinta));
   border-bottom: none;
   position: relative;
   padding: 1.75rem 2rem 2.5rem 2rem;
   box-shadow: 0 2px 6px rgba(27, 42, 48, 0.06);
+  transition: border-top-color 0.2s ease;
+}
+
+.btn-confirmar-coleta {
+  background-color: var(--cor-material, var(--et-tinta));
+  border-color: var(--cor-material, var(--et-tinta));
+  color: #FFFFFF;
+  font-weight: 700;
+  transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.1s ease;
+}
+
+.btn-confirmar-coleta:hover {
+  filter: brightness(0.9);
+  color: #FFFFFF;
+  transform: translateY(-1px);
+}
+
+.btn-confirmar-coleta:focus-visible {
+  outline: 3px solid var(--et-tinta);
+  outline-offset: 2px;
+}
+
+.btn-confirmar-coleta:active {
+  transform: translateY(1px);
 }
 
 /* Borda Picotada Inferior em CSS Puro */
