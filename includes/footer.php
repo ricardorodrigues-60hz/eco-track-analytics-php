@@ -45,7 +45,17 @@ $pagina_atual = $_SERVER['SCRIPT_NAME'] ?? '';
 <?php endif; ?>
 
 <!-- Bootstrap 5 Bundle JS (Popper incluso) via CDN -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous" defer></script>
+
+<!-- Scripts Globais do Sistema -->
+<script src="<?= asset('assets/js/confirmar-acao.js') ?>" defer></script>
+
+<!-- Scripts Específicos por Página -->
+<?php if (!empty($scripts_especificos) && is_array($scripts_especificos)): ?>
+    <?php foreach ($scripts_especificos as $script_item): ?>
+        <script src="<?= asset($script_item) ?>" defer></script>
+    <?php endforeach; ?>
+<?php endif; ?>
 
 </body>
 </html>

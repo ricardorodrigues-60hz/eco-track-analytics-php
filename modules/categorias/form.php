@@ -104,23 +104,7 @@ require_once __DIR__ . '/../../includes/header.php';
     </div>
 </div>
 
-<script>
-    // Sincronização dinâmica entre o seletor nativo de cor e o input de texto
-    const colorInput = document.getElementById('cor_hex');
-    const colorText = document.getElementById('cor_hex_text');
-    const colorChip = document.getElementById('cor_preview_chip');
-
-    colorInput.addEventListener('input', function() {
-        colorText.value = colorInput.value.toUpperCase();
-        colorChip.style.backgroundColor = colorInput.value;
-    });
-
-    colorText.addEventListener('input', function() {
-        if (/^#[0-9A-Fa-f]{6}$/.test(colorText.value)) {
-            colorInput.value = colorText.value;
-            colorChip.style.backgroundColor = colorText.value;
-        }
-    });
-</script>
-
-<?php require_once __DIR__ . '/../../includes/footer.php'; ?>
+<?php 
+$scripts_especificos = ['assets/js/categoria-cor.js'];
+require_once __DIR__ . '/../../includes/footer.php'; 
+?>

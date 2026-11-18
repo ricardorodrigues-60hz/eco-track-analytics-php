@@ -201,126 +201,17 @@ require_once __DIR__ . '/../includes/header.php';
 
     </div>
 
-    <!-- SCRIPT DE RENDERIZAÇÃO DOS GRÁFICOS GOOGLE CHARTS -->
-    <script>
-        google.charts.load('current', {'packages':['corechart']});
-        google.charts.setOnLoadCallback(desenharTodosGraficos);
+    <!-- DADOS DOS GRÁFICOS ANALÍTICOS (JSON SEGURO) -->
+    <script type="application/json" id="dados-dashboard-graficos"><?= codificar_json_seguro([
+        'categorias' => $dados_categorias,
+        'mensal'     => $dados_mensal,
+        'ecopontos'  => $dados_ecopontos,
+        'ranking'    => $dados_ranking,
+    ]) ?></script>
 
-        function desenharTodosGraficos() {
-            desenharGraficoCategorias();
-            desenharGraficoEvolucao();
-            desenharGraficoEcopontos();
-            desenharGraficoRankingCO2();
-        }
-
-        // 1. Gráfico de Rosca (PieChart com pieHole)
-        function desenharGraficoCategorias() {
-            const raw = <?= codificar_json_seguro($dados_categorias) ?>;
-            const dataTable = new google.visualization.DataTable();
-            dataTable.addColumn('string', 'Categoria');
-            dataTable.addColumn('number', 'Peso (kg)');
-
-            const cores = [];
-            raw.forEach(item => {
-                dataTable.addRow([item.nome_categoria, parseFloat(item.total_peso_kg)]);
-                cores.push(item.cor_hex);
-            });
-
-            const options = {
-                pieHole: 0.42,
-                colors: cores,
-                chartArea: { width: '90%', height: '80%' },
-                legend: { position: 'right', textStyle: { fontName: 'Public Sans', fontSize: 12 } },
-                fontName: 'Public Sans',
-                backgroundColor: 'transparent'
-            };
-
-            const chart = new google.visualization.PieChart(document.getElementById('grafico_rosca_categorias'));
-            chart.draw(dataTable, options);
-        }
-
-        // 2. Gráfico de Evolução Mensal (LineChart)
-        function desenharGraficoEvolucao() {
-            const raw = <?= codificar_json_seguro($dados_mensal) ?>;
-            const dataTable = new google.visualization.DataTable();
-            dataTable.addColumn('string', 'Mês');
-            dataTable.addColumn('number', 'Volume Coletado (kg)');
-
-            raw.forEach(item => {
-                dataTable.addRow([item.rotulo, parseFloat(item.total_peso)]);
-            });
-
-            const options = {
-                colors: ['#1B2A30'],
-                lineWidth: 3,
-                pointSize: 6,
-                chartArea: { width: '85%', height: '75%' },
-                legend: { position: 'none' },
-                hAxis: { textStyle: { fontName: 'Public Sans', fontSize: 11 } },
-                vAxis: { minValue: 0, textStyle: { fontName: 'Public Sans', fontSize: 11 } },
-                fontName: 'Public Sans',
-                backgroundColor: 'transparent'
-            };
-
-            const chart = new google.visualization.LineChart(document.getElementById('grafico_evolucao_mensal'));
-            chart.draw(dataTable, options);
-        }
-
-        // 3. Gráfico de Volume por Ecoponto (ColumnChart)
-        function desenharGraficoEcopontos() {
-            const raw = <?= codificar_json_seguro($dados_ecopontos) ?>;
-            const dataTable = new google.visualization.DataTable();
-            dataTable.addColumn('string', 'Ecoponto');
-            dataTable.addColumn('number', 'Volume (kg)');
-
-            raw.forEach(item => {
-                dataTable.addRow([item.ecoponto, parseFloat(item.total_peso)]);
-            });
-
-            const options = {
-                colors: ['#5C6B70'],
-                chartArea: { width: '85%', height: '75%' },
-                legend: { position: 'none' },
-                hAxis: { textStyle: { fontName: 'Public Sans', fontSize: 11 } },
-                vAxis: { minValue: 0, textStyle: { fontName: 'Public Sans', fontSize: 11 } },
-                fontName: 'Public Sans',
-                backgroundColor: 'transparent'
-            };
-
-            const chart = new google.visualization.ColumnChart(document.getElementById('grafico_volume_ecoponto'));
-            chart.draw(dataTable, options);
-        }
-
-        // 4. Gráfico de Ranking de CO₂ Evitado (BarChart horizontal)
-        function desenharGraficoRankingCO2() {
-            const raw = <?= codificar_json_seguro($dados_ranking) ?>;
-            const dataTable = new google.visualization.DataTable();
-            dataTable.addColumn('string', 'Material');
-            dataTable.addColumn('number', 'CO₂ Evitado (kg)');
-            dataTable.addColumn({type: 'string', role: 'style'});
-
-            raw.forEach(item => {
-                dataTable.addRow([item.material, parseFloat(item.total_co2), 'color: ' + item.cor_hex]);
-            });
-
-            const options = {
-                chartArea: { width: '70%', height: '80%' },
-                legend: { position: 'none' },
-                hAxis: { minValue: 0, textStyle: { fontName: 'Public Sans', fontSize: 11 } },
-                vAxis: { textStyle: { fontName: 'Public Sans', fontSize: 12, bold: true } },
-                fontName: 'Public Sans',
-                backgroundColor: 'transparent'
-            };
-
-            const chart = new google.visualization.BarChart(document.getElementById('grafico_ranking_co2'));
-            chart.draw(dataTable, options);
-        }
-
-        // Redesenho automático ao redimensionar a janela
-        window.addEventListener('resize', function() {
-            desenharTodosGraficos();
-        });
-    </script>
 <?php endif; ?>
 
-<?php require_once __DIR__ . '/../includes/footer.php'; ?>
+<?php 
+$scripts_especificos = ['assets/js/dashboard.js'];
+require_once __DIR__ . '/../includes/footer.php'; 
+?>

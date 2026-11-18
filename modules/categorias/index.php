@@ -77,7 +77,7 @@ $msg_erro = $_GET['erro'] ?? '';
                                     ✏️ Editar
                                 </a>
 
-                                <form method="POST" action="/eco-track-analytics-php/modules/categorias/deletar.php" onsubmit="return confirm('Atenção: A exclusão só será permitida caso nenhum material utilize esta categoria. Deseja prosseguir?');" style="display:inline;">
+                                <form method="POST" action="/eco-track-analytics-php/modules/categorias/deletar.php" data-confirm="Atenção: A exclusão só será permitida caso nenhum material utilize esta categoria. Deseja prosseguir?" style="display:inline;">
                                     <?= campo_csrf() ?>
                                     <input type="hidden" name="id" value="<?= $c['id'] ?>">
                                     <button type="submit" class="btn btn-sm btn-outline-danger" title="Excluir Categoria" style="padding:0.25rem 0.5rem; min-height:auto;">

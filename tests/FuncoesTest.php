@@ -118,4 +118,12 @@ class FuncoesTest extends TestCase {
         $this->assertStringNotContainsString('>', $json);
         $this->assertStringNotContainsString('&', $json);
     }
+
+    /**
+     * Testa o helper de assets para prevenção de caminhos quebrados.
+     */
+    public function test_helper_asset(): void {
+        $this->assertSame('/eco-track-analytics-php/assets/js/dashboard.js', asset('assets/js/dashboard.js'));
+        $this->assertSame('/eco-track-analytics-php/assets/css/ecotrack.css', asset('/assets/css/ecotrack.css'));
+    }
 }

@@ -115,3 +115,14 @@ function codificar_json_seguro($dados): string {
         JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_UNESCAPED_UNICODE
     );
 }
+
+/**
+ * Retorna a URL pública ou caminho web absoluto de um arquivo de asset para evitar caminhos quebrados.
+ * 
+ * @param string $caminho Caminho relativo ao diretório raiz ou de assets.
+ * @return string
+ */
+function asset(string $caminho): string {
+    $caminho_limpo = ltrim($caminho, '/');
+    return '/eco-track-analytics-php/' . $caminho_limpo;
+}

@@ -199,44 +199,7 @@ require_once __DIR__ . '/../../includes/header.php';
     </div>
 </div>
 
-<script>
-    // Cálculo Reativo de Impacto Ambiental no Ticket de Pesagem
-    const selectMaterial = document.getElementById('material_id');
-    const inputPeso = document.getElementById('peso_kg');
-    const displayCo2 = document.getElementById('impacto-co2');
-    const displayAgua = document.getElementById('impacto-agua');
-    const formColeta = document.getElementById('form-coleta');
-    const ticketBox = document.getElementById('ticket-coleta');
-
-    function atualizarCalculoImpacto() {
-        const opt = selectMaterial.options[selectMaterial.selectedIndex];
-        const peso = parseFloat(inputPeso.value) || 0;
-
-        if (opt && opt.value && peso > 0) {
-            const fatorCo2 = parseFloat(opt.dataset.co2) || 0;
-            const fatorAgua = parseFloat(opt.dataset.agua) || 0;
-
-            const totalCo2 = peso * fatorCo2;
-            const totalAgua = peso * fatorAgua;
-
-            displayCo2.textContent = totalCo2.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' kg';
-            displayAgua.textContent = totalAgua.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' L';
-        } else {
-            displayCo2.textContent = '0,00 kg';
-            displayAgua.textContent = '0,00 L';
-        }
-    }
-
-    selectMaterial.addEventListener('change', atualizarCalculoImpacto);
-    inputPeso.addEventListener('input', atualizarCalculoImpacto);
-
-    // Efeito de impressão do ticket ao submeter
-    formColeta.addEventListener('submit', function() {
-        ticketBox.classList.add('et-ticket--imprimindo');
-    });
-
-    // Roda no carregamento inicial caso seja tela de edição
-    atualizarCalculoImpacto();
-</script>
-
-<?php require_once __DIR__ . '/../../includes/footer.php'; ?>
+<?php 
+$scripts_especificos = ['assets/js/coletas-ticket.js'];
+require_once __DIR__ . '/../../includes/footer.php'; 
+?>

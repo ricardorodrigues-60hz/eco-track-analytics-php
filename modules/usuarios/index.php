@@ -88,7 +88,7 @@ $msg_erro = $_GET['erro'] ?? '';
                                     ✏️ Editar
                                 </a>
                                 
-                                <form method="POST" action="/eco-track-analytics-php/modules/usuarios/deletar.php" onsubmit="return confirm('Confirma a alteração do status deste usuário?');" style="display:inline;">
+                                <form method="POST" action="/eco-track-analytics-php/modules/usuarios/deletar.php" data-confirm="Confirma a alteração do status deste usuário?" style="display:inline;">
                                     <?= campo_csrf() ?>
                                     <input type="hidden" name="id" value="<?= $u['id'] ?>">
                                     <input type="hidden" name="novo_status" value="<?= (int)$u['ativo'] === 1 ? 0 : 1 ?>">
