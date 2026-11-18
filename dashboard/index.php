@@ -14,6 +14,7 @@ exigir_login();
 
 require_once __DIR__ . '/repository.php';
 require_once __DIR__ . '/../includes/funcoes.php';
+require_once __DIR__ . '/../includes/icones.php';
 
 $usuario_logado = obter_usuario_logado();
 $eh_admin = ($usuario_logado['perfil'] === 'admin');
@@ -46,20 +47,18 @@ require_once __DIR__ . '/../includes/header.php';
 ?>
 
 <!-- CABEÇALHO DO PAINEL COM FILTRO DE PERÍODO -->
-<div class="d-flex flex-wrap justify-content-between align-items-center mb-4 pb-2 gap-3" style="border-bottom: 2px solid var(--et-linha);">
+<div class="d-flex flex-wrap justify-content-between align-items-end mb-4 pb-3 gap-3 et-cabecalho-secao">
     <div>
-        <span style="font-size:0.8rem; font-weight:700; color:var(--et-cinza); text-transform:uppercase; letter-spacing:0.05em;">
-            <?= $eh_admin ? 'Indicadores Globais de Impacto' : 'Desempenho Individual de Coletas' ?>
-        </span>
-        <h1 class="mb-0" style="font-size:2.2rem;"><?= e($titulo_pagina) ?></h1>
+        <p class="et-secao-supertitulo"><?= $eh_admin ? 'Indicadores globais de impacto' : 'Desempenho individual de coletas' ?></p>
+        <h1 class="mb-0"><?= e($titulo_pagina) ?></h1>
     </div>
 
     <!-- Filtro de Período (GET) -->
     <form method="GET" action="" class="d-flex align-items-center gap-2">
         <div class="d-flex align-items-center gap-1 bg-white p-1" style="border:2px solid var(--et-linha);">
-            <span style="font-size:0.8rem; font-weight:700; color:var(--et-cinza); padding:0 0.35rem;">DE</span>
+            <span style="font-size:0.8rem; font-weight:700; color:var(--et-cinza); padding:0 0.35rem;">De</span>
             <input type="date" name="data_inicio" class="form-control form-control-sm border-0 et-tabular" value="<?= e($data_inicio) ?>" style="min-height:30px; font-weight:600;">
-            <span style="font-size:0.8rem; font-weight:700; color:var(--et-cinza); padding:0 0.35rem;">ATÉ</span>
+            <span style="font-size:0.8rem; font-weight:700; color:var(--et-cinza); padding:0 0.35rem;">até</span>
             <input type="date" name="data_fim" class="form-control form-control-sm border-0 et-tabular" value="<?= e($data_fim) ?>" style="min-height:30px; font-weight:600;">
         </div>
         <button type="submit" class="btn btn-primary btn-sm px-3" style="min-height:38px;">Aplicar</button>
@@ -72,47 +71,50 @@ require_once __DIR__ . '/../includes/header.php';
     </div>
 <?php endif; ?>
 
-<!-- CARDS DE MÉTRICAS CONSOLIDADAS -->
-<div class="row g-3 mb-4">
-    <div class="col-sm-6 col-xl-3">
-        <div class="p-3" style="background:var(--et-ticket); border:2px solid var(--et-linha);">
-            <span style="font-size:0.75rem; text-transform:uppercase; font-weight:700; color:var(--et-cinza); letter-spacing:0.05em;">Cargas Registradas</span>
-            <div class="et-num fw-bold" style="font-size:2.4rem; color:var(--et-tinta); line-height:1.1; margin-top:0.25rem;">
-                <?= formatar_numero((float)$totais['total_coletas'], 0) ?>
-            </div>
-            <span style="font-size:0.8rem; color:var(--et-cinza);">tickets validados</span>
+<!-- FITA DE PESAGEM (substitui os 4 cards idênticos) -->
+<div class="et-fita-pesagem mb-4" role="region" aria-label="Resumo de indicadores do período">
+    <?php
+    $provisorio = defined('FATORES_PROVISORIOS') && FATORES_PROVISORIOS === true;
+    $linhas = [
+        [
+            'rotulo' => 'Cargas registradas',
+            'valor'  => formatar_numero((float)$totais['total_coletas'], 0),
+            'unidade' => 'tickets',
+            'provisorio' => false,
+        ],
+        [
+            'rotulo' => 'Volume reciclado',
+            'valor'  => formatar_numero($totais['total_peso_kg'], 0),
+            'unidade' => 'kg',
+            'provisorio' => false,
+        ],
+        [
+            'rotulo' => 'CO₂ evitado',
+            'valor'  => formatar_numero($totais['total_co2_kg'], 0),
+            'unidade' => 'kg CO₂e',
+            'provisorio' => $provisorio,
+        ],
+        [
+            'rotulo' => 'Recursos hídricos poupados',
+            'valor'  => formatar_numero($totais['total_agua_litros'], 0),
+            'unidade' => 'litros',
+            'provisorio' => $provisorio,
+        ],
+    ];
+    foreach ($linhas as $linha):
+    ?>
+        <div class="et-fita-pesagem__linha">
+            <span class="et-fita-pesagem__rotulo"><?= $linha['rotulo'] ?></span>
+            <span class="et-fita-pesagem__guia" aria-hidden="true"></span>
+            <span class="et-fita-pesagem__valor et-num">
+                <?= $linha['valor'] ?>
+                <span class="et-fita-pesagem__unidade"><?= $linha['unidade'] ?></span>
+                <?php if ($linha['provisorio']): ?>
+                    <span class="et-carimbo-provisorio" aria-label="valor provisório">prov.</span>
+                <?php endif; ?>
+            </span>
         </div>
-    </div>
-
-    <div class="col-sm-6 col-xl-3">
-        <div class="p-3" style="background:var(--et-ticket); border:2px solid var(--et-linha);">
-            <span style="font-size:0.75rem; text-transform:uppercase; font-weight:700; color:var(--et-cinza); letter-spacing:0.05em;">Volume Reciclado</span>
-            <div class="et-num fw-bold" style="font-size:2.4rem; color:var(--et-tinta); line-height:1.1; margin-top:0.25rem;">
-                <?= formatar_numero($totais['total_peso_kg'], 0) ?> <span style="font-size:1.2rem; font-weight:600;">kg</span>
-            </div>
-            <span style="font-size:0.8rem; color:var(--et-cinza);"><?= formatar_numero($totais['total_peso_kg'] / 1000.0, 2) ?> toneladas métricas</span>
-        </div>
-    </div>
-
-    <div class="col-sm-6 col-xl-3">
-        <div class="p-3" style="background:var(--et-ticket); border:2px solid var(--et-linha); border-left:4px solid var(--et-sucesso);">
-            <span style="font-size:0.75rem; text-transform:uppercase; font-weight:700; color:var(--et-sucesso); letter-spacing:0.05em;">CO₂ Evitado (Mitigado)</span>
-            <div class="et-num fw-bold" style="font-size:2.4rem; color:var(--et-sucesso); line-height:1.1; margin-top:0.25rem;">
-                <?= formatar_numero($totais['total_co2_kg'], 0) ?> <span style="font-size:1.2rem; font-weight:600;">kg</span>
-            </div>
-            <span style="font-size:0.8rem; color:var(--et-cinza);"><?= formatar_numero($totais['total_co2_kg'] / 1000.0, 2) ?> t CO₂e (EPA WARM)</span>
-        </div>
-    </div>
-
-    <div class="col-sm-6 col-xl-3">
-        <div class="p-3" style="background:var(--et-ticket); border:2px solid var(--et-linha); border-left:4px solid var(--et-papel);">
-            <span style="font-size:0.75rem; text-transform:uppercase; font-weight:700; color:var(--et-papel); letter-spacing:0.05em;">Recursos Hídricos Poupados</span>
-            <div class="et-num fw-bold" style="font-size:2.4rem; color:var(--et-papel); line-height:1.1; margin-top:0.25rem;">
-                <?= formatar_numero($totais['total_agua_litros'], 0) ?> <span style="font-size:1.2rem; font-weight:600;">L</span>
-            </div>
-            <span style="font-size:0.8rem; color:var(--et-cinza);"><?= formatar_numero($totais['total_agua_litros'] / 1000.0, 1) ?> m³ poupados</span>
-        </div>
-    </div>
+    <?php endforeach; ?>
 </div>
 
 <?php if ($totais['total_coletas'] === 0): ?>
@@ -121,84 +123,83 @@ require_once __DIR__ . '/../includes/header.php';
         <div class="et-empty-state__title">Nenhuma coleta registrada no período selecionado</div>
         <p class="mb-3">Selecione um intervalo de datas maior ou realize o lançamento de pesagens para gerar as análises gráficas.</p>
         <a href="/eco-track-analytics-php/modules/coletas/form.php" class="btn btn-primary">
-            <span>⚖️</span> Registrar Primeira Coleta
+            <?= icone('coletar') ?> Registrar Primeira Coleta
         </a>
     </div>
 <?php else: ?>
 
-    <!-- ELEMENTO MEMORÁVEL: BARRA DE FARDO SEGMENTADA -->
-    <div class="mb-4">
-        <div class="d-flex justify-content-between align-items-center mb-1">
-            <span style="font-size:0.8rem; font-weight:700; text-transform:uppercase; color:var(--et-cinza); letter-spacing:0.05em;">
-                📦 Fardo Consolidado do Período — Proporção por Categoria (CONAMA 275/2001)
-            </span>
-            <span style="font-size:0.8rem; font-weight:700; color:var(--et-tinta);" class="et-tabular">
-                Total: <?= formatar_numero($total_peso_categorias, 1) ?> kg
-            </span>
-        </div>
+    <!-- SEPARADOR 01: COMPOSIÇÃO DO FARDO -->
+    <hr class="et-secao-hr">
+    <h2 class="et-secao-titulo"><span class="et-secao-titulo__num">01</span> Composição do fardo
+        <span class="et-secao-titulo__meta et-tabular">
+            Total: <?= formatar_numero($total_peso_categorias, 1) ?> kg
+        </span>
+    </h2>
 
-        <div class="et-fardo" role="img" aria-label="Proporção percentual de resíduos no período">
-            <?php foreach ($dados_categorias as $cat): ?>
-                <?php 
-                $pct = $total_peso_categorias > 0 ? ($cat['total_peso_kg'] / $total_peso_categorias) * 100.0 : 0.0;
-                if ($pct < 1.0) continue;
-                ?>
-                <div class="et-fardo__fatia"
-                     style="width: <?= number_format($pct, 2, '.', '') ?>%; background-color: <?= e($cat['cor_hex']) ?>;"
-                     title="<?= e($cat['nome_categoria']) ?>: <?= formatar_numero($pct, 1) ?>% (<?= formatar_numero($cat['total_peso_kg'], 0) ?> kg)">
-                    <?= e($cat['nome_categoria']) ?> (<?= formatar_numero($pct, 1) ?>%)
-                </div>
-            <?php endforeach; ?>
+    <!-- BARRA DE FARDO SEGMENTADA (com animação de enchimento) -->
+    <div class="et-fardo mb-5" role="img" aria-label="Proporção percentual de resíduos no período" id="et-fardo-principal">
+        <?php foreach ($dados_categorias as $cat):
+            $pct = $total_peso_categorias > 0 ? ($cat['total_peso_kg'] / $total_peso_categorias) * 100.0 : 0.0;
+            if ($pct < 1.0) continue;
+        ?>
+            <div class="et-fardo__fatia"
+                 data-pct="<?= number_format($pct, 2, '.', '') ?>"
+                 data-categoria="<?= e($cat['nome_categoria']) ?>"
+                 style="width:0%; background-color:<?= e($cat['cor_hex']) ?>;"
+                 title="<?= e($cat['nome_categoria']) ?>: <?= formatar_numero($pct, 1) ?>% (<?= formatar_numero($cat['total_peso_kg'], 0) ?> kg)">
+                <?= e($cat['nome_categoria']) ?> (<?= formatar_numero($pct, 1) ?>%)
+            </div>
+        <?php endforeach; ?>
+    </div>
+
+    <!-- LINHA: EVOLUÇÃO MENSAL (8 col) + RANKING CO₂ (4 col) -->
+    <hr class="et-secao-hr">
+    <div class="row g-0 mb-1">
+        <div class="col-lg-8">
+            <h2 class="et-secao-titulo"><span class="et-secao-titulo__num">02</span> Evolução mensal de pesagem</h2>
+        </div>
+        <div class="col-lg-4">
+            <h2 class="et-secao-titulo"><span class="et-secao-titulo__num">03</span> Ranking de CO₂ evitado</h2>
+        </div>
+    </div>
+    <div class="row g-3 mb-5">
+        <div class="col-lg-8">
+            <div class="et-grafico-bloco">
+                <span class="et-grafico-bloco__meta">Volume em kg / mês</span>
+                <div id="grafico_evolucao_mensal" style="width:100%; height:300px;"></div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="et-grafico-bloco">
+                <span class="et-grafico-bloco__meta">kg CO₂e mitigado por material</span>
+                <div id="grafico_ranking_co2" style="width:100%; height:300px;"></div>
+            </div>
         </div>
     </div>
 
-    <!-- OS 4 GRÁFICOS OFICIAIS DO SISTEMA -->
-    <div class="row g-4">
-        
-        <!-- GRÁFICO 1: ROSCA POR CATEGORIA -->
-        <div class="col-lg-6">
-            <div class="p-3" style="background:#FFFFFF; border:2px solid var(--et-linha);">
-                <div class="d-flex justify-content-between align-items-center mb-2 pb-2" style="border-bottom:1px solid var(--et-linha);">
-                    <h2 style="font-size:1.15rem; margin:0;">1. Volume por Categoria</h2>
-                    <span style="font-size:0.75rem; color:var(--et-cinza); font-weight:600;">Proporção Relativa</span>
-                </div>
-                <div id="grafico_rosca_categorias" style="width:100%; height:320px;"></div>
+    <!-- LINHA: ROSCA CATEGORIAS (5 col) + VOLUME ECOPONTO (7 col) -->
+    <hr class="et-secao-hr">
+    <div class="row g-0 mb-1">
+        <div class="col-lg-5">
+            <h2 class="et-secao-titulo"><span class="et-secao-titulo__num">04</span> Distribuição por categoria</h2>
+        </div>
+        <div class="col-lg-7">
+            <h2 class="et-secao-titulo"><span class="et-secao-titulo__num">05</span> Volume por unidade ecoponto</h2>
+        </div>
+    </div>
+    <div class="row g-3 mb-4">
+        <div class="col-lg-5">
+            <div class="et-grafico-bloco">
+                <span class="et-grafico-bloco__meta">Proporção relativa no período</span>
+                <div id="grafico_rosca_categorias" style="width:100%; height:300px;"></div>
             </div>
         </div>
-
-        <!-- GRÁFICO 2: EVOLUÇÃO TEMPORAL MENSAL -->
-        <div class="col-lg-6">
-            <div class="p-3" style="background:#FFFFFF; border:2px solid var(--et-linha);">
-                <div class="d-flex justify-content-between align-items-center mb-2 pb-2" style="border-bottom:1px solid var(--et-linha);">
-                    <h2 style="font-size:1.15rem; margin:0;">2. Evolução Mensal de Pesagem</h2>
-                    <span style="font-size:0.75rem; color:var(--et-cinza); font-weight:600;">Volume em kg</span>
-                </div>
-                <div id="grafico_evolucao_mensal" style="width:100%; height:320px;"></div>
+        <div class="col-lg-7">
+            <div class="et-grafico-bloco">
+                <span class="et-grafico-bloco__meta">Total em quilogramas</span>
+                <div id="grafico_volume_ecoponto" style="width:100%; height:300px;"></div>
             </div>
         </div>
-
-        <!-- GRÁFICO 3: VOLUME POR ECOPONTO -->
-        <div class="col-lg-6">
-            <div class="p-3" style="background:#FFFFFF; border:2px solid var(--et-linha);">
-                <div class="d-flex justify-content-between align-items-center mb-2 pb-2" style="border-bottom:1px solid var(--et-linha);">
-                    <h2 style="font-size:1.15rem; margin:0;">3. Volume por Unidade Ecoponto</h2>
-                    <span style="font-size:0.75rem; color:var(--et-cinza); font-weight:600;">Total em Quilogramas</span>
-                </div>
-                <div id="grafico_volume_ecoponto" style="width:100%; height:320px;"></div>
-            </div>
-        </div>
-
-        <!-- GRÁFICO 4: RANKING DE CO₂ EVITADO POR MATERIAL -->
-        <div class="col-lg-6">
-            <div class="p-3" style="background:#FFFFFF; border:2px solid var(--et-linha);">
-                <div class="d-flex justify-content-between align-items-center mb-2 pb-2" style="border-bottom:1px solid var(--et-linha);">
-                    <h2 style="font-size:1.15rem; margin:0;">4. Ranking de CO₂ Evitado</h2>
-                    <span style="font-size:0.75rem; color:var(--et-cinza); font-weight:600;">kg CO₂e Mitigado</span>
-                </div>
-                <div id="grafico_ranking_co2" style="width:100%; height:320px;"></div>
-            </div>
-        </div>
-
     </div>
 
     <!-- DADOS DOS GRÁFICOS ANALÍTICOS (JSON SEGURO) -->
@@ -211,7 +212,7 @@ require_once __DIR__ . '/../includes/header.php';
 
 <?php endif; ?>
 
-<?php 
-$scripts_especificos = ['assets/js/dashboard.js'];
-require_once __DIR__ . '/../includes/footer.php'; 
+<?php
+$scripts_especificos = ['assets/js/dashboard.js', 'assets/js/fardo-animar.js'];
+require_once __DIR__ . '/../includes/footer.php';
 ?>

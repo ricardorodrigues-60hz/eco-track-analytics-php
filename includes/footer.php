@@ -7,6 +7,9 @@
 
 $usuario_logado = obter_usuario_logado();
 $pagina_atual = $_SERVER['SCRIPT_NAME'] ?? '';
+if (!function_exists('icone')) {
+    require_once __DIR__ . '/icones.php';
+}
 ?>
     </main>
 </div><!-- /.et-app-layout -->
@@ -17,7 +20,7 @@ $pagina_atual = $_SERVER['SCRIPT_NAME'] ?? '';
         <a href="/eco-track-analytics-php/dashboard/index.php"
            class="et-bottom-nav__item <?= str_contains($pagina_atual, '/dashboard/') ? 'active' : '' ?>"
            <?= str_contains($pagina_atual, '/dashboard/') ? 'aria-current="page"' : '' ?>>
-            <span class="et-bottom-nav__icon">📊</span>
+            <span class="et-bottom-nav__icon"><?= icone('painel') ?></span>
             <span>Painel</span>
         </a>
 
@@ -26,14 +29,14 @@ $pagina_atual = $_SERVER['SCRIPT_NAME'] ?? '';
            class="et-bottom-nav__item et-bottom-nav__item--destaque <?= str_contains($pagina_atual, '/coletas/form.php') ? 'active' : '' ?>"
            <?= str_contains($pagina_atual, '/coletas/form.php') ? 'aria-current="page"' : '' ?>
            aria-label="Registrar nova pesagem de coleta">
-            <span class="et-bottom-nav__icon" style="font-size:1.35rem; line-height:1;">⚖️</span>
+            <span class="et-bottom-nav__icon" style="line-height:1;"><?= icone('coletar') ?></span>
             <span>Coletar</span>
         </a>
 
         <a href="/eco-track-analytics-php/modules/coletas/index.php"
            class="et-bottom-nav__item <?= (str_contains($pagina_atual, '/coletas/index.php') || (str_contains($pagina_atual, '/coletas/') && !str_contains($pagina_atual, 'form.php'))) ? 'active' : '' ?>"
            <?= (str_contains($pagina_atual, '/coletas/index.php') || (str_contains($pagina_atual, '/coletas/') && !str_contains($pagina_atual, 'form.php'))) ? 'aria-current="page"' : '' ?>>
-            <span class="et-bottom-nav__icon">📋</span>
+            <span class="et-bottom-nav__icon"><?= icone('historico') ?></span>
             <span><?= $usuario_logado['perfil'] === 'admin' ? 'Coletas' : 'Histórico' ?></span>
         </a>
 
@@ -41,7 +44,7 @@ $pagina_atual = $_SERVER['SCRIPT_NAME'] ?? '';
             <a href="/eco-track-analytics-php/reports/index.php"
                class="et-bottom-nav__item <?= str_contains($pagina_atual, '/reports/') ? 'active' : '' ?>"
                <?= str_contains($pagina_atual, '/reports/') ? 'aria-current="page"' : '' ?>>
-                <span class="et-bottom-nav__icon">📄</span>
+                <span class="et-bottom-nav__icon"><?= icone('relatorios') ?></span>
                 <span>Relatórios</span>
             </a>
         <?php endif; ?>

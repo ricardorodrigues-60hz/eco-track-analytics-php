@@ -15,6 +15,7 @@ if (!defined('APP_URL')) {
 
 require_once __DIR__ . '/auth_check.php';
 require_once __DIR__ . '/funcoes.php';
+require_once __DIR__ . '/icones.php';
 
 $usuario_logado = obter_usuario_logado();
 $pagina_atual = $_SERVER['SCRIPT_NAME'] ?? '';
@@ -60,7 +61,7 @@ $titulo_pagina = $titulo_pagina ?? 'EcoTrack Analytics';
                    class="et-btn-acao-primaria <?= str_contains($pagina_atual, '/coletas/form.php') ? 'active' : '' ?>"
                    <?= str_contains($pagina_atual, '/coletas/form.php') ? 'aria-current="page"' : '' ?>
                    aria-label="Registrar nova pesagem de coleta">
-                    <span class="et-btn-acao-primaria__icone">⚖️</span>
+                    <span class="et-btn-acao-primaria__icone"><?= icone('coletar') ?></span>
                     <span class="et-btn-acao-primaria__texto">Registrar Coleta</span>
                 </a>
             </div>
@@ -69,13 +70,13 @@ $titulo_pagina = $titulo_pagina ?? 'EcoTrack Analytics';
                 <a href="/eco-track-analytics-php/dashboard/index.php"
                    class="et-nav-item__link <?= str_contains($pagina_atual, '/dashboard/') ? 'active' : '' ?>"
                    <?= str_contains($pagina_atual, '/dashboard/') ? 'aria-current="page"' : '' ?>>
-                    <span>📊</span> Painel <?= $usuario_logado['perfil'] === 'admin' ? 'Geral' : 'Operacional' ?>
+                    <?= icone('painel') ?> Painel <?= $usuario_logado['perfil'] === 'admin' ? 'Geral' : 'Operacional' ?>
                 </a>
 
                 <a href="/eco-track-analytics-php/modules/coletas/index.php"
                    class="et-nav-item__link <?= (str_contains($pagina_atual, '/coletas/index.php') || (str_contains($pagina_atual, '/coletas/') && !str_contains($pagina_atual, 'form.php'))) ? 'active' : '' ?>"
                    <?= (str_contains($pagina_atual, '/coletas/index.php') || (str_contains($pagina_atual, '/coletas/') && !str_contains($pagina_atual, 'form.php'))) ? 'aria-current="page"' : '' ?>>
-                    <span>📋</span> <?= $usuario_logado['perfil'] === 'admin' ? 'Todas as Coletas' : 'Minhas Coletas' ?>
+                    <?= icone('historico') ?> <?= $usuario_logado['perfil'] === 'admin' ? 'Todas as Coletas' : 'Minhas Coletas' ?>
                 </a>
 
                 <?php if ($usuario_logado['perfil'] === 'admin'): ?>
@@ -84,25 +85,25 @@ $titulo_pagina = $titulo_pagina ?? 'EcoTrack Analytics';
                     <a href="/eco-track-analytics-php/modules/ecopontos/index.php"
                        class="et-nav-item__link <?= str_contains($pagina_atual, '/ecopontos/') ? 'active' : '' ?>"
                        <?= str_contains($pagina_atual, '/ecopontos/') ? 'aria-current="page"' : '' ?>>
-                        <span>📍</span> Ecopontos
+                        <?= icone('ecopontos') ?> Ecopontos
                     </a>
 
                     <a href="/eco-track-analytics-php/modules/categorias/index.php"
                        class="et-nav-item__link <?= str_contains($pagina_atual, '/categorias/') ? 'active' : '' ?>"
                        <?= str_contains($pagina_atual, '/categorias/') ? 'aria-current="page"' : '' ?>>
-                        <span>🏷️</span> Categorias
+                        <?= icone('categorias') ?> Categorias
                     </a>
 
                     <a href="/eco-track-analytics-php/modules/materiais/index.php"
                        class="et-nav-item__link <?= str_contains($pagina_atual, '/materiais/') ? 'active' : '' ?>"
                        <?= str_contains($pagina_atual, '/materiais/') ? 'aria-current="page"' : '' ?>>
-                        <span>♻️</span> Materiais & Fatores
+                        <?= icone('materiais') ?> Materiais & Fatores
                     </a>
 
                     <a href="/eco-track-analytics-php/modules/usuarios/index.php"
                        class="et-nav-item__link <?= str_contains($pagina_atual, '/usuarios/') ? 'active' : '' ?>"
                        <?= str_contains($pagina_atual, '/usuarios/') ? 'aria-current="page"' : '' ?>>
-                        <span>👥</span> Usuários
+                        <?= icone('usuarios') ?> Usuários
                     </a>
 
                     <div style="font-size:0.75rem; text-transform:uppercase; color:var(--et-linha); padding:0.75rem 0.85rem 0.25rem; font-weight:700; letter-spacing:0.05em;">Auditoria e Emissão</div>
@@ -110,7 +111,7 @@ $titulo_pagina = $titulo_pagina ?? 'EcoTrack Analytics';
                     <a href="/eco-track-analytics-php/reports/index.php"
                        class="et-nav-item__link <?= str_contains($pagina_atual, '/reports/') ? 'active' : '' ?>"
                        <?= str_contains($pagina_atual, '/reports/') ? 'aria-current="page"' : '' ?>>
-                        <span>📄</span> Relatórios em PDF
+                        <?= icone('relatorios') ?> Relatórios em PDF
                     </a>
                 <?php endif; ?>
             </nav>
@@ -121,7 +122,7 @@ $titulo_pagina = $titulo_pagina ?? 'EcoTrack Analytics';
                     <span class="et-sidebar__user-role"><?= $usuario_logado['perfil'] === 'admin' ? 'Administrador' : 'Coletor' ?></span>
                 </div>
                 <a href="/eco-track-analytics-php/auth/logout.php" title="Encerrar Sessão" style="color:var(--et-linha); text-decoration:none; padding:0.35rem; font-size:1.1rem;">
-                    🚪
+                    <?= icone('sair') ?>
                 </a>
             </div>
         </aside>

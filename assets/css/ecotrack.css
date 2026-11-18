@@ -59,7 +59,6 @@ h1, h2, h3, h4, .et-display, .et-titulo {
   font-family: 'Barlow Condensed', 'Arial Narrow', sans-serif;
   font-weight: 700;
   letter-spacing: 0.02em;
-  text-transform: uppercase;
   color: var(--et-tinta);
   margin-top: 0;
 }
@@ -614,4 +613,159 @@ h1, h2, h3, h4, .et-display, .et-titulo {
   border-radius: 0;
   border-width: 1px 1px 1px 4px;
   font-size: 0.92rem;
+}
+
+
+/* =============================================================================
+   8. Fase 11 — Identidade Visual Refinada
+   ============================================================================= */
+
+/* --- Ícones SVG de Traço --------------------------------------------------- */
+.et-icone {
+  display: inline-block;
+  vertical-align: -0.2em;
+  flex-shrink: 0;
+}
+
+.et-icone--lg {
+  width: 24px;
+  height: 24px;
+}
+
+/* --- Cabeçalho de seção com filete picotado -------------------------------- */
+.et-cabecalho-secao {
+  border-bottom: 2px dashed var(--et-linha);
+}
+
+.et-secao-supertitulo {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--et-cinza);
+  margin: 0 0 0.25rem;
+  letter-spacing: 0;
+}
+
+/* --- Separadores e títulos numerados de seção ------------------------------ */
+.et-secao-hr {
+  border: none;
+  border-top: 1px solid var(--et-linha);
+  margin: 1.5rem 0 1rem;
+}
+
+.et-secao-titulo {
+  font-family: 'Barlow Condensed', 'Arial Narrow', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--et-cinza);
+  letter-spacing: 0;
+  text-transform: none;
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.et-secao-titulo__num {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--et-linha);
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.et-secao-titulo__meta {
+  margin-left: auto;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--et-tinta);
+}
+
+/* --- Bloco de gráfico (substitui caixas de borda idêntica) ----------------- */
+.et-grafico-bloco {
+  background: var(--et-branco);
+  border-top: 3px solid var(--et-tinta);
+  border-left: 1px solid var(--et-linha);
+  border-right: 1px solid var(--et-linha);
+  border-bottom: 1px solid var(--et-linha);
+  padding: 0.75rem 1rem 0.5rem;
+  height: 100%;
+}
+
+.et-grafico-bloco__meta {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--et-cinza);
+  margin-bottom: 0.5rem;
+}
+
+/* --- Fita de Pesagem / KPI Cupom ------------------------------------------ */
+.et-fita-pesagem {
+  background: var(--et-ticket);
+  border: 2px solid var(--et-tinta);
+  border-left: 6px solid var(--et-tinta);
+  padding: 0.85rem 1.25rem;
+}
+
+.et-fita-pesagem__linha {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  padding: 0.3rem 0;
+  border-bottom: 1px dashed var(--et-linha);
+}
+
+.et-fita-pesagem__linha:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.et-fita-pesagem__rotulo {
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: var(--et-cinza);
+  white-space: nowrap;
+}
+
+/* Dot-leader: preenche o espaço entre rótulo e valor com pontos */
+.et-fita-pesagem__guia {
+  flex: 1;
+  border-bottom: 2px dotted var(--et-linha);
+  margin-bottom: 0.25em;
+  min-width: 2rem;
+}
+
+.et-fita-pesagem__valor {
+  font-family: 'Barlow Condensed', 'Arial Narrow', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--et-tinta);
+  line-height: 1;
+  white-space: nowrap;
+  display: flex;
+  align-items: baseline;
+  gap: 0.3rem;
+}
+
+.et-fita-pesagem__unidade {
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--et-cinza);
+}
+
+/* --- Carimbo "provisório" -------------------------------------------------- */
+.et-carimbo-provisorio {
+  display: inline-block;
+  font-family: 'Barlow Condensed', 'Arial Narrow', sans-serif;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--et-aviso);
+  border: 1.5px solid var(--et-aviso);
+  padding: 0 0.3rem;
+  opacity: 0.75;
+  vertical-align: middle;
+  margin-left: 0.25rem;
+  line-height: 1.4;
 }
