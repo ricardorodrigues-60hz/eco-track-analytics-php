@@ -1,0 +1,492 @@
+/**
+ * EcoTrack Analytics — Design System & Folha de Estilos Principal
+ * 
+ * Conceito: Balança Industrial e Ticket de Pesagem Mineral.
+ * Respeita a Resolução CONAMA 275/2001 para cores das categorias de recicláveis.
+ */
+
+/* =============================================================================
+   1. Variáveis e Tokens de Design
+   ============================================================================= */
+:root {
+  /* Paleta Base Mineral */
+  --et-concreto: #E6E8E5; /* Fundo geral da aplicação */
+  --et-tinta:    #1B2A30; /* Texto primário e botão de ação principal */
+  --et-cinza:    #5C6B70; /* Texto secundário, rótulos e bordas suaves */
+  --et-linha:    #C9CECB; /* Linhas de demarcação e divisores */
+  --et-ticket:   #FAFAF7; /* Superfície de alto contraste do comprovante */
+  --et-branco:   #FFFFFF;
+
+  /* Cores Normativas de Reciclagem (CONAMA 275/2001) */
+  --et-papel:    #005EB8; /* Azul */
+  --et-plastico: #CC0000; /* Vermelho */
+  --et-vidro:    #007A33; /* Verde */
+  --et-metal:    #FFC000; /* Amarelo */
+
+  /* Cores de Alerta e Estado */
+  --et-sucesso:  #1B6A45;
+  --et-perigo:   #A82323;
+  --et-aviso:    #8F6300;
+
+  /* Sobrescrita dos Tokens do Bootstrap 5 */
+  --bs-body-bg:          var(--et-concreto);
+  --bs-body-color:       var(--et-tinta);
+  --bs-primary:          var(--et-tinta);
+  --bs-primary-rgb:      27, 42, 48;
+  --bs-border-color:     var(--et-linha);
+  --bs-font-sans-serif:  'Public Sans', system-ui, -apple-system, sans-serif;
+}
+
+/* =============================================================================
+   2. Reset e Tipografia
+   ============================================================================= */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--et-concreto);
+  color: var(--et-tinta);
+  font-family: 'Public Sans', system-ui, -apple-system, sans-serif;
+  font-size: 15px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, .et-display, .et-titulo {
+  font-family: 'Barlow Condensed', 'Arial Narrow', sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--et-tinta);
+  margin-top: 0;
+}
+
+.et-num, .et-tabular {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
+}
+
+/* =============================================================================
+   3. Estrutura de Layout (Desktop & Mobile)
+   ============================================================================= */
+.et-app-layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* Menu Lateral Fixo (Desktop) */
+.et-sidebar {
+  width: 260px;
+  background-color: var(--et-tinta);
+  color: var(--et-concreto);
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1020;
+  padding: 1.5rem 1rem;
+}
+
+.et-sidebar__brand {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 2px solid rgba(201, 206, 203, 0.2);
+  margin-bottom: 1.5rem;
+  text-decoration: none;
+}
+
+.et-sidebar__logo-text {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #FFFFFF;
+  line-height: 1.1;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.et-sidebar__tag {
+  font-size: 0.7rem;
+  background-color: var(--et-cinza);
+  color: #FFFFFF;
+  padding: 0.15rem 0.4rem;
+  font-weight: 600;
+  border-radius: 2px;
+  letter-spacing: 0.05em;
+}
+
+.et-nav-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  flex-grow: 1;
+}
+
+.et-nav-item__link {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 0.7rem 0.85rem;
+  color: #D1D6D4;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.95rem;
+  border-left: 3px solid transparent;
+  transition: background-color 0.15s ease, color 0.15s ease, border-left-color 0.15s ease;
+  min-height: 44px;
+}
+
+.et-nav-item__link:hover, .et-nav-item__link:focus-visible {
+  background-color: rgba(255, 255, 255, 0.08);
+  color: #FFFFFF;
+  border-left-color: var(--et-linha);
+}
+
+.et-nav-item__link.active {
+  background-color: rgba(255, 255, 255, 0.14);
+  color: #FFFFFF;
+  font-weight: 600;
+  border-left-color: var(--et-metal);
+}
+
+.et-sidebar__user {
+  padding-top: 1rem;
+  border-top: 1px solid rgba(201, 206, 203, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.et-sidebar__user-info {
+  line-height: 1.2;
+}
+
+.et-sidebar__user-name {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: #FFFFFF;
+  display: block;
+}
+
+.et-sidebar__user-role {
+  font-size: 0.75rem;
+  color: var(--et-linha);
+}
+
+/* Área de Conteúdo Principal */
+.et-main-content {
+  flex-grow: 1;
+  margin-left: 260px;
+  padding: 2rem 2.5rem 5rem 2.5rem;
+  min-width: 0;
+}
+
+/* Barra Superior Mobile */
+.et-mobile-header {
+  display: none;
+  background-color: var(--et-tinta);
+  color: #FFFFFF;
+  padding: 0.85rem 1.25rem;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 1010;
+}
+
+/* Barra Inferior Mobile (Bottom Navigation Bar) */
+.et-bottom-nav {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 64px;
+  background-color: var(--et-tinta);
+  border-top: 2px solid var(--et-linha);
+  z-index: 1030;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 0 0.5rem;
+}
+
+.et-bottom-nav__item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  color: #D1D6D4;
+  font-size: 0.72rem;
+  font-weight: 600;
+  min-height: 48px;
+  gap: 0.2rem;
+}
+
+.et-bottom-nav__item.active {
+  color: var(--et-metal);
+}
+
+.et-bottom-nav__item--destaque {
+  background-color: var(--et-metal);
+  color: var(--et-tinta) !important;
+  font-weight: 700;
+  border-radius: 4px;
+  padding: 0.35rem 0.5rem;
+  transform: translateY(-8px);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+}
+
+/* Responsividade Mobile (< 992px) */
+@media (max-width: 991.98px) {
+  .et-sidebar {
+    display: none;
+  }
+  .et-mobile-header {
+    display: flex;
+  }
+  .et-bottom-nav {
+    display: flex;
+  }
+  .et-main-content {
+    margin-left: 0;
+    padding: 1.25rem 1rem 5rem 1rem;
+  }
+}
+
+/* =============================================================================
+   4. Componentes: Ticket de Pesagem Digital
+   ============================================================================= */
+.et-ticket {
+  background: var(--et-ticket);
+  border: 2px solid var(--et-linha);
+  border-bottom: none;
+  position: relative;
+  padding: 1.75rem 2rem 2.5rem 2rem;
+  box-shadow: 0 2px 6px rgba(27, 42, 48, 0.06);
+}
+
+/* Borda Picotada Inferior em CSS Puro */
+.et-ticket::after {
+  content: '';
+  position: absolute;
+  bottom: -12px;
+  left: -2px;
+  right: -2px;
+  height: 12px;
+  background: radial-gradient(circle at 6px 0px, transparent 6px, var(--et-ticket) 6.5px);
+  background-size: 12px 12px;
+  background-repeat: repeat-x;
+}
+
+.et-ticket__header {
+  border-bottom: 2px dashed var(--et-linha);
+  padding-bottom: 1rem;
+  margin-bottom: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.et-ticket__num-peso {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 3.5rem;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--et-tinta);
+  font-variant-numeric: tabular-nums;
+}
+
+.et-ticket__impacto-box {
+  background-color: rgba(230, 232, 229, 0.6);
+  border-left: 4px solid var(--et-tinta);
+  padding: 0.85rem 1.25rem;
+  margin-top: 1.25rem;
+}
+
+/* Animação do Ticket Sendo Impresso ao Salvar */
+@keyframes et-imprimir {
+  from {
+    clip-path: inset(0 0 100% 0);
+    opacity: 0.7;
+  }
+  to {
+    clip-path: inset(0 0 0% 0);
+    opacity: 1;
+  }
+}
+
+.et-ticket--imprimindo {
+  animation: et-imprimir 0.55s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .et-ticket--imprimindo {
+    animation: none;
+  }
+}
+
+/* =============================================================================
+   5. Componente: Barra de Fardo Segmentada (Dashboard)
+   ============================================================================= */
+.et-fardo {
+  display: flex;
+  width: 100%;
+  height: 36px;
+  background-color: var(--et-linha);
+  border: 2px solid var(--et-tinta);
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+}
+
+.et-fardo__fatia {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #FFFFFF;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+  transition: opacity 0.15s ease;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.et-fardo__fatia:hover {
+  opacity: 0.9;
+}
+
+/* Chips Normativos de Categoria */
+.et-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.2rem 0.6rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  border-radius: 2px;
+  color: #FFFFFF;
+}
+
+.et-chip--papel    { background-color: var(--et-papel); }
+.et-chip--plastico { background-color: var(--et-plastico); }
+.et-chip--vidro    { background-color: var(--et-vidro); }
+.et-chip--metal    { background-color: var(--et-metal); color: var(--et-tinta); }
+
+/* =============================================================================
+   6. Formulários, Botões e Tabelas
+   ============================================================================= */
+.form-control, .form-select {
+  background-color: var(--et-branco);
+  border: 2px solid var(--et-linha);
+  border-radius: 0;
+  padding: 0.65rem 0.85rem;
+  font-size: 0.95rem;
+  color: var(--et-tinta);
+  min-height: 44px;
+}
+
+.form-control:focus, .form-select:focus {
+  border-color: var(--et-tinta);
+  box-shadow: none;
+  outline: 2px solid var(--et-tinta);
+  outline-offset: 1px;
+}
+
+.btn {
+  border-radius: 0;
+  font-family: 'Public Sans', sans-serif;
+  font-weight: 600;
+  padding: 0.65rem 1.25rem;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  letter-spacing: 0.02em;
+}
+
+.btn-primary {
+  background-color: var(--et-tinta);
+  border-color: var(--et-tinta);
+  color: #FFFFFF;
+}
+
+.btn-primary:hover, .btn-primary:focus-visible {
+  background-color: #273b43;
+  border-color: #273b43;
+  color: #FFFFFF;
+}
+
+.btn-outline-secondary {
+  border-color: var(--et-cinza);
+  color: var(--et-tinta);
+  background-color: transparent;
+}
+
+.btn-outline-secondary:hover {
+  background-color: var(--et-linha);
+  color: var(--et-tinta);
+}
+
+/* Tabelas Industriais */
+.table {
+  --bs-table-bg: var(--et-branco);
+  --bs-table-striped-bg: rgba(230, 232, 229, 0.4);
+  --bs-table-border-color: var(--et-linha);
+  font-size: 0.92rem;
+  border: 1px solid var(--et-linha);
+}
+
+.table th {
+  background-color: var(--et-tinta);
+  color: #FFFFFF;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  font-size: 0.95rem;
+  padding: 0.75rem 0.85rem;
+}
+
+.table td {
+  padding: 0.75rem 0.85rem;
+  vertical-align: middle;
+}
+
+/* =============================================================================
+   7. Estados Vazios e Alertas
+   ============================================================================= */
+.et-empty-state {
+  background-color: var(--et-ticket);
+  border: 2px dashed var(--et-linha);
+  padding: 3rem 2rem;
+  text-align: center;
+  color: var(--et-cinza);
+}
+
+.et-empty-state__title {
+  font-size: 1.5rem;
+  color: var(--et-tinta);
+  margin-bottom: 0.5rem;
+}
+
+.alert {
+  border-radius: 0;
+  border-width: 1px 1px 1px 4px;
+  font-size: 0.92rem;
+}
