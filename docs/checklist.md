@@ -1,6 +1,6 @@
 # EcoTrack Analytics — Checklist de Homologação e Integração (Fase 8)
 
-Este documento orienta a validação manual e automatizada completa de todos os fluxos e requisitos de conformidade do sistema **EcoTrack Analytics** (TCC FATEC Botucatu — ADS).
+Este documento orienta a validação manual e automatizada completa de todos os fluxos e requisitos de conformidade do sistema **EcoTrack Analytics** 
 
 ---
 
