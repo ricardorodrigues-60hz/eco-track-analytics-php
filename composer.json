@@ -1,0 +1,17 @@
+{
+    "name": "fatec/eco-track-analytics",
+    "description": "Sistema de análise de impacto ambiental de coleta de resíduos recicláveis — TCC FATEC Botucatu",
+    "type": "project",
+    "require": {
+        "spipu/html2pdf": "5.2.8"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^10.5"
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "platform": {
+            "php": "8.2.0"
+        }
+    }
+}
