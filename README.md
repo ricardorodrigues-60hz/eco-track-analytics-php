@@ -2,7 +2,7 @@
 
 Sistema web modular de alta fidelidade para registro, gestão operacional e auditoria de impacto ambiental na triagem de resíduos recicláveis em ecopontos e cooperativas.
 
-> **Trabalho de Conclusão de Curso (TCC) — FATEC Botucatu**  
+> **Projeto Para Aula Prog. Web — FATEC Botucatu**  
 > Curso Superior de Tecnologia em Análise e Desenvolvimento de Sistemas (ADS).  
 > **Arquitetura de Referência:** ADR-001 (Revisão 2).
 
