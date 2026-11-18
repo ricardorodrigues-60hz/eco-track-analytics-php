@@ -95,26 +95,3 @@ http://localhost/eco-track-analytics-php/
 | **Administrador** | `admin@ecotrack.local` | `admin123` | Acesso irrestrito a todos os cadastros, painel analítico global e emissão dos 4 relatórios PDF |
 | **Coletor (Operador)** | `coletor@ecotrack.local` | `coletor123` | Lançamento de pesagens (ticket), visualização estrita do seu próprio histórico e dashboard operacional |
 
----
-
-## 6. Roteiro Sugerido para Apresentação do TCC
-
-1. **Acesso com Perfil Coletor:**
-   - Faça login com `coletor@ecotrack.local` / `coletor123`.
-   - Demonstre a barra de navegação inferior mobile no navegador (inspecionar em modo celular de 360px).
-   - Clique em **"Coletar"** e mostre o formulário em formato de **Ticket de Pesagem**.
-   - Digite um peso em kg e selecione materiais diferentes: mostre o **cálculo de impacto projetado instantaneamente em tempo real**.
-   - Submeta a coleta e mostre o efeito visual de impressão do comprovante.
-   - Demonstre que na listagem de coletas, o operador enxerga estritamente as suas próprias pesagens.
-2. **Tentativa de Acesso Não Autorizado:**
-   - Tente acessar `/modules/usuarios/` diretamente na URL e mostre o bloqueio HTTP 403 do servidor.
-3. **Acesso com Perfil Administrador:**
-   - Efetue logout e faça login como `admin@ecotrack.local` / `admin123`.
-   - Acesse o **Painel Analítico** e apresente a **Barra de Fardo** e os **4 Gráficos Google Charts** (Rosca, Linhas, Colunas e Barras horizontais).
-   - Demonstre o redimensionamento dinâmico ao ajustar o tamanho da tela.
-4. **Cadastros e Integridade Referencial:**
-   - Acesse **Categorias** e tente excluir uma categoria que possua materiais vinculados: apresente a mensagem amigável de bloqueio disparada pelo `ON DELETE RESTRICT`.
-5. **Emissão de Relatórios em PDF:**
-   - Acesse a central de relatórios e gere o **Balanço de Impacto** e a **Produtividade por Ecoponto** (apresentando a taxa percentual de ocupação calculada).
-6. **Execução de Testes Automatizados:**
-   - No terminal, execute `vendor/bin/phpunit` para comprovar a passagem de 100% dos testes unitários das regras puras de cálculo.
